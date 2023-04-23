@@ -2,19 +2,20 @@ import { Global, MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserModule } from './user/user.module';
-import { CvModule } from './cv/cv.module';
-import { SkillModule } from './skill/skill.module';
-import { User } from './user/entities/user.entity';
-import { Cv } from './cv/entities/cv.entity';
-import { Skill } from './skill/entities/skill.entity';
+import { UserModule } from './GestionCv/user/user.module';
+import { CvModule } from './GestionCv/cv/cv.module';
+import { SkillModule } from './GestionCv/skill/skill.module';
+import { User } from './GestionCv/user/entities/user.entity';
+import { Cv } from './GestionCv/cv/entities/cv.entity';
+import { Skill } from './GestionCv/skill/entities/skill.entity';
 import { ConfigModule } from "@nestjs/config";
-import { TodoModule } from './todo/todo.module';
-import { Todo } from './todo/entities/todo.entity';
+import { TodoModel } from './todo/Entities/todoModel';
+import { TodoEntity} from './todo/Entities/todoEntity';
 import { AuthMiddleware } from './Middlewares/auth.middleware';
+import { TodoModule } from './todo/todoModule';
 @Global()
 @Module({
-  imports: [CvModule,UserModule,SkillModule,ConfigModule.forRoot({
+  imports: [CvModule,UserModule,TodoModule,SkillModule,ConfigModule.forRoot({
     isGlobal:true,
   }),TypeOrmModule.forRoot(
 {
@@ -25,7 +26,7 @@ import { AuthMiddleware } from './Middlewares/auth.middleware';
   username: 'root',
   password: '',
   database: 'tpnest',
- entities: [User,Cv,Skill,Todo],
+ entities: [User,Cv,Skill,TodoEntity],
  synchronize: true
 }
 ), UserModule, CvModule, SkillModule, TodoModule],
