@@ -1,6 +1,6 @@
 import { NestFactory } from "@nestjs/core";
 import { randEmail, randFilePath, randFirstName, randJobTitle, randLastName, randNumber, randPassword, randSkill, randUserName} from "@ngneat/falso";
-import { AppModule } from "../app.module";
+import { AppModule } from "../../app.module";
 import { CvService } from "../cv/cv.service";
 import { Cv } from "../cv/entities/cv.entity";
 import { Skill } from "../skill/entities/skill.entity";
