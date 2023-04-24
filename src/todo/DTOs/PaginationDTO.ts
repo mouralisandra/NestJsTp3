@@ -1,25 +1,13 @@
-import { IsNumber, IsOptional } from 'class-validator';
-import { ErrorsEnum } from '../Entities/ErrorsEnum';
 import { Type } from 'class-transformer';
-
+import { IsInt, IsNumber, IsOptional } from 'class-validator';
 export class PaginationDto {
   @IsOptional()
+  @IsNumber()
   @Type(() => Number)
-  @IsNumber(
-    {},
-    {
-      message: ErrorsEnum.IS_NUMBER,
-    },
-  )
-  page?: number;
+  page: number;
 
   @IsOptional()
+  @IsNumber()
   @Type(() => Number)
-  @IsNumber(
-    {},
-    {
-      message: ErrorsEnum.IS_NUMBER,
-    },
-  )
-  limit?: number;
+  nb: number;
 }

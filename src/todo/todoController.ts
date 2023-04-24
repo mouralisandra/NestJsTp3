@@ -4,6 +4,8 @@ import { searchTodoDTO } from './DTOs/SearchTodoDTO';
 import { TodoServiceV2 } from './todoService';
 import { TodoAddDTO } from './DTOs/TodoAddDTO';
 import { TodoUpdateDTO } from './DTOs/TodoUpdateDTO';
+import { log } from 'console';
+import { PaginationDto } from './DTOs/PaginationDTO';
 
 // @Controller({path : 'todo', version : '1'})
 // export class TodoController {
@@ -36,12 +38,16 @@ import { TodoUpdateDTO } from './DTOs/TodoUpdateDTO';
 //     }
 // }
 
-@Controller({version : '2', path : 'todo' })
+@Controller({path : 'todo' })
 export class TodoControllerV2 {
     constructor(private todoService : TodoServiceV2){}
-
+    // @Get()
+    // getTodos(searchTodoDTO){
+    //     return this.todoService.findAll();
+    // }
     @Get()
     getTodos(@Query() queryParams : searchTodoDTO){
+        console.log("here");;
         return this.todoService.findAll(queryParams);
     }
 
@@ -74,6 +80,11 @@ export class TodoControllerV2 {
     @Get('/:id')
     getTodoById(@Param() params){
         return this.todoService.todoById(params.id)
+    }
+
+    @Get('Pagination')
+    async getTodosByPagination(@Query() paginationDto: PaginationDto) {
+      return this.todoService.getTodosByPagination(paginationDto);
     }
 }
 

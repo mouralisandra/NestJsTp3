@@ -7,6 +7,8 @@ import { TodoAddDTO } from './DTOs/TodoAddDTO';
 import { TodoUpdateDTO } from './DTOs/TodoUpdateDTO';
 import { TodoModel } from './Entities/TodoModel';
 import { TodoStatusEnum } from './TodoStatusEnum';
+import { PaginationDto } from './DTOs/PaginationDTO';
+import { paginate } from 'src/todo/DTOs/paginate';
 
 // @Injectable()
 // export class TodoService {
@@ -91,9 +93,9 @@ export class TodoServiceV2 {
 
     async findAll (queryParams? : searchTodoDTO){
         let reponse
-        if(queryParams.critere == undefined){
+        if(queryParams.critere != undefined){
             reponse = await this.todoRepository.find({ where : [{ name : Like("%"+queryParams.critere+"%") }, {description : Like("%"+queryParams.critere+"%")}]})  
-        }else if( queryParams.statut == undefined) {
+        }else if( queryParams.statut != undefined) {
             reponse = await this.todoRepository.find({ where : {status : queryParams.statut}})
         }else{
             reponse = await this.todoRepository.find()
@@ -150,4 +152,12 @@ export class TodoServiceV2 {
 
         return res
     }
+
+    async getTodosByPagination(
+        queryParams: PaginationDto,
+      ): Promise<TodoEntity[]> {
+        const qb = this.todoRepository.createQueryBuilder('todos');
+        const { page, nb } = queryParams;
+        return paginate<TodoEntity>(qb, page, nb).getMany();
+      }
 }
